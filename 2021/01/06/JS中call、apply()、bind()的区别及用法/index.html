@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+        <title>JS中call()、apply()、bind() | CHU BLOG</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel='shortcut icon' href="/favicon.ico">
+    
+<link rel="stylesheet" href="/css/index.css">
+
+    
+<link rel="stylesheet" href="/css/plugins/highlight/dark.css">
+
+    
+<link rel="stylesheet" href="/css/plugins/iconfont/iconfont.css">
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+<body>
+    <div class="navbar-container">
+  <div class="navbar">
+    <ul>
+      <li><a href="/">CHU BLOG</a></li>
+      <li><a href="/">首页</a></li>
+      <li><a href="/categories">分类</a></li>
+      <li><a href="/tags">标签</a></li>
+      <li><a href="/about">关于</a></li>
+    </ul>
+  </div>
+</div>
+
+    <div class="all-container">
+        <div class="article-container">
+    <h2 class="title">JS中call()、apply()、bind()</h2>
+    <span class="info">2021年1月6日</span>
+    
+    
+        <div class="toc">
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#JS%E4%B8%ADcall-%E3%80%81apply-%E3%80%81bind-%E7%9A%84%E5%8C%BA%E5%88%AB%E5%8F%8A%E7%94%A8%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">JS中call()、apply()、bind()的区别及用法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1-%E5%8C%BA%E5%88%AB"><span class="toc-number">2.</span> <span class="toc-text">1.区别</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1%E4%B8%89%E8%80%85%E7%9A%84%E7%9B%B8%E5%90%8C%E7%82%B9%EF%BC%9A%E9%83%BD%E6%98%AF%E7%94%A8%E6%9D%A5%E6%94%B9%E5%8F%98this%E7%9A%84%E6%8C%87%E5%90%91"><span class="toc-number">2.0.1.</span> <span class="toc-text">1.1三者的相同点：都是用来改变this的指向</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-call-%E5%92%8Capply-%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9A"><span class="toc-number">2.0.2.</span> <span class="toc-text">1.2 call()和apply()的区别：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3call-%E5%92%8Cbind-%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9A"><span class="toc-number">2.0.3.</span> <span class="toc-text">1.3call()和bind()的区别：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-%E7%94%A8%E6%B3%95"><span class="toc-number">3.</span> <span class="toc-text">2.用法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-call-%E7%9A%84%E5%BA%94%E7%94%A8"><span class="toc-number">3.1.</span> <span class="toc-text">2.1 call()的应用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-1%E5%88%A9%E7%94%A8call-%E5%88%A4%E6%96%AD%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-number">3.1.1.</span> <span class="toc-text">2.1.1利用call()判断数据类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-2%E5%88%A9%E7%94%A8call-%E7%BF%BB%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">3.1.2.</span> <span class="toc-text">2.1.2利用call()翻转字符串</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2apply-%E7%9A%84%E5%BA%94%E7%94%A8"><span class="toc-number">3.2.</span> <span class="toc-text">2.2apply()的应用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-1%E5%88%A9%E7%94%A8apply-%E6%B1%82%E6%9C%80%E5%A4%A7%E5%80%BC"><span class="toc-number">3.2.1.</span> <span class="toc-text">2.2.1利用apply()求最大值</span></a></li></ol></li></ol></li></ol>
+        </div>
+    
+
+    <div class="content"><h1 id="JS中call-、apply-、bind-的区别及用法"><a href="#JS中call-、apply-、bind-的区别及用法" class="headerlink" title="JS中call()、apply()、bind()的区别及用法"></a>JS中call()、apply()、bind()的区别及用法</h1><h1 id="1-区别"><a href="#1-区别" class="headerlink" title="1.区别"></a>1.区别</h1><h3 id="1-1三者的相同点：都是用来改变this的指向"><a href="#1-1三者的相同点：都是用来改变this的指向" class="headerlink" title="1.1三者的相同点：都是用来改变this的指向"></a>1.1三者的相同点：都是用来改变this的指向</h3><h3 id="1-2-call-和apply-的区别："><a href="#1-2-call-和apply-的区别：" class="headerlink" title="1.2 call()和apply()的区别："></a>1.2 call()和apply()的区别：</h3><p>相同点：都是调用一个对象的一个方法，用另一个对象替换当前对象（功能相同）</p>
+<p><strong>例如</strong>： B.call(A, args1,args2);即A对象调用B对象的方法<br>F.apply(G, arguments);即G对象应用F对象的方法</p>
+<p>不同点：参数书写方式不同</p>
+<p>call()的第一个参数是this要指向的对象，后面传入的是参数列表，参数可以是任意类型，当第一个参数为null、undefined的时候，默认指向window；</p>
+<p>apply()：第一个参数是this要指向的对象，第二个参数是数组</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;例如：</span><br><span class="line">var obj &#x3D; &#123;&#125;&#x2F;&#x2F;定义一个空的对象</span><br><span class="line">function f(x,y)&#123;</span><br><span class="line">console.log(x,y)</span><br><span class="line">console.log(this) &#x2F;&#x2F;this是指obj</span><br><span class="line">&#125;</span><br><span class="line">f.apply(obj,[1,2]) &#x2F;&#x2F;后面的值需要用[]括起来</span><br><span class="line">f.call(obj,1,2) &#x2F;&#x2F;直接写</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-3call-和bind-的区别："><a href="#1-3call-和bind-的区别：" class="headerlink" title="1.3call()和bind()的区别："></a>1.3call()和bind()的区别：</h3><p>相同点：都是用来改变this的指向</p>
+<p>不同点：call()改过this的指向后，会再执行函数，bind()改过this后，不执行函数，会返回一个绑定新this的函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;例如：</span><br><span class="line">function f()&#123;</span><br><span class="line">console.log(&quot;看我怎么被调用&quot;);</span><br><span class="line">console.log(this) &#x2F;&#x2F;指向this</span><br><span class="line">&#125;</span><br><span class="line">var obj &#x3D; &#123;&#125;;</span><br><span class="line">f.call(obj) &#x2F;&#x2F;直接调用函数</span><br><span class="line">var g &#x3D; f.bind(obj); &#x2F;&#x2F;bind()不能调用函数</span><br><span class="line">g();  &#x2F;&#x2F;此时才调用函数</span><br></pre></td></tr></table></figure>
+
+<h1 id="2-用法"><a href="#2-用法" class="headerlink" title="2.用法"></a>2.用法</h1><h2 id="2-1-call-的应用"><a href="#2-1-call-的应用" class="headerlink" title="2.1 call()的应用"></a>2.1 call()的应用</h2><h3 id="2-1-1利用call-判断数据类型"><a href="#2-1-1利用call-判断数据类型" class="headerlink" title="2.1.1利用call()判断数据类型"></a>2.1.1利用call()判断数据类型</h3><p><strong>在判断数据类形式使用typeof，一般不是太准确的，我们可以使用Object.prototype.toString.call()方法来判断一个数据的数据类型</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">console.log(Object.prototype.toString.call(&quot;qq&quot;))            &#x2F;&#x2F; [Object String] 返回值都是字符串类型</span><br><span class="line">console.log(Object.prototype.toString.call(12))              &#x2F;&#x2F; [object Number]</span><br><span class="line">console.log(Object.prototype.toString.call(false))           &#x2F;&#x2F; [object Boolean]</span><br><span class="line">console.log(Object.prototype.toString.call(undefined))       &#x2F;&#x2F; [object Undefined]</span><br><span class="line">console.log(Object.prototype.toString.call(null))            &#x2F;&#x2F; [object Null]</span><br><span class="line">console.log(Object.prototype.toString.call(function()&#123;&#125;))    &#x2F;&#x2F; [object Function]</span><br><span class="line">console.log(Object.prototype.toString.call([]))              &#x2F;&#x2F; [object Array]</span><br><span class="line">console.log(Object.prototype.toString.call(&#123;&#125;))              &#x2F;&#x2F; [object Object]</span><br></pre></td></tr></table></figure>
+
+<p>我们可以利用上面的输出的内容进行封装一个函数，以达到判断输入数据的基本类型</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">function getType(a)&#123;</span><br><span class="line">    var obj &#x3D; Object.prototype.toString.call(a); &#x2F;&#x2F;区分对象类型  确定当前的数据的类型</span><br><span class="line">    var sub &#x3D; obj.substr(8); </span><br><span class="line">    &#x2F;&#x2F; stringObject.substr(start,length)  start 要抽取的子符串的起始下标，</span><br><span class="line">    &#x2F;&#x2F; length 截取的长度，如果不写则表示从start开始截取到最后 ，stringObject表示某一字符串</span><br><span class="line">   var len &#x3D; sub.length;</span><br><span class="line">   var sub &#x3D; sub.substr(0,len-1)</span><br><span class="line">   var rs &#x3D;  sub.toLowerCase(sub) &#x2F;&#x2F;转换成小写</span><br><span class="line">   return rs ;</span><br><span class="line"> &#125;</span><br><span class="line">  console.log(getType(&quot;a&quot;)); &#x2F;&#x2F;string</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-1-2利用call-翻转字符串"><a href="#2-1-2利用call-翻转字符串" class="headerlink" title="2.1.2利用call()翻转字符串"></a>2.1.2利用call()翻转字符串</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;思路:将字符串转化为数组，借用数组中的reverse，将字符串翻转过来</span><br><span class="line"> var str &#x3D; &quot;abcdefg&quot;;</span><br><span class="line"> console.log(Array.prototype.reverse.call(str)); &#x2F;&#x2F;此时会报错误，即引用类型错误，就是说只有数组才能使用reverse这个方法；(错误写法)</span><br><span class="line">    &#x2F;&#x2F;方法一：这种方法内有使用call()</span><br><span class="line"> var arr &#x3D;  Array.from(str).reverse().join(&quot;&quot;) &#x2F;&#x2F;将字符串转化为数组，在进行翻转，然后在进行拼接</span><br><span class="line"> console.log(arr) &#x2F;&#x2F;gfedcba</span><br><span class="line"> console.log(typeof arr) &#x2F;&#x2F;string</span><br><span class="line">     &#x2F;&#x2F;方法二：</span><br><span class="line">var rs &#x3D; Array.prototype.reverse.call(str.split(&quot;&quot;)).join(&quot;&quot;); </span><br><span class="line">    &#x2F;&#x2F;splice(start,length)方法用于把一个字符串分割成字符串数组，start 表示从指定的地方分割字符串    length表示分割的长度。</span><br><span class="line">    &#x2F;&#x2F;返回一个一个字符串数组 如果把空字符串 (&quot;&quot;) 用为参数那么字符串中的每个字符之间都会被分割</span><br><span class="line">console.log(rs); &#x2F;&#x2F;gfedcba</span><br><span class="line">console.log(typeof arr) &#x2F;&#x2F;string</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-2apply-的应用"><a href="#2-2apply-的应用" class="headerlink" title="2.2apply()的应用"></a>2.2apply()的应用</h2><h3 id="2-2-1利用apply-求最大值"><a href="#2-2-1利用apply-求最大值" class="headerlink" title="2.2.1利用apply()求最大值"></a>2.2.1利用apply()求最大值</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var arr &#x3D;[2,6,8,3,4,9,7,23,56,889]; </span><br><span class="line">console.log(Math.max.apply(arr,arr)) &#x2F;&#x2F;第一个arr表示让arr借用max这个方法，第二个arr表示传给max的数据</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;apply()所执行的操作：1.执行Math.max(1,2,3,5,4) 2.把内部的this改成arr</span><br></pre></td></tr></table></figure>
+
+<p>注意：Math是一个对象，并不是构造器</p>
+</div>
+    <hr>
+    <div class="tags"></div>
+</div>
+<div class="paging">
+    
+    
+        <a id="prev" href="/2021/01/06/mockjs%E6%A8%A1%E6%8B%9F%E6%95%B0%E6%8D%AE/">上一篇</a>
+    
+    
+        <a id="next" href="/2021/01/06/git%E4%BB%A3%E7%A0%81%E7%89%88%E6%9C%AC%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/">下一篇</a>
+    
+</div>
+<div class="footer">
+    <p><a href="/about/">转载前请联系作者</a></p>
+</div>
+
+<script src="/js/highlight.pack.js"></script>
+
+</script>
+<script>
+	hljs.initHighlightingOnLoad();
+</script>
+
+<script src="/js/iconfont.js"></script>
+
+<style>
+    .icon {
+      width: 1rem;
+      height: 1rem;
+      vertical-align: -0.15em;
+      fill: currentColor;
+      overflow: hidden;
+    }
+</style>
+    
+    </div>
+    <div class='rights'>
+	<p>©<span id='years'></span> Mint Forge. All Rights Reserved.</p>
+</div>
+<script type="text/javascript">
+	var today = new Date()
+	var years = today.getFullYear()
+	document.getElementById('years').innerHTML=years
+</script>
+    
+<script src="/js/iconfont.js"></script>
+
+<style>
+    .icon {
+      width: 1rem;
+      height: 1rem;
+      vertical-align: -0.15em;
+      fill: currentColor;
+      overflow: hidden;
+    }
+</style>
+    
+</body>
+</html>
